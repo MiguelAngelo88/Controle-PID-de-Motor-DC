@@ -33,6 +33,9 @@ void setup() {
   pinMode(PWM_SAIDA, OUTPUT);
   Serial.begin(115200);
   attachInterrupt(digitalPinToInterrupt(pinA), interrupcao, RISING);
+
+  // Imprimir cabeçalho para identificar as variáveis no Serial Monitor
+  Serial.println("setPoint_filtrado,RPM_filtrado,SinalDeControle,MinScale,MaxScale");
 }
 
 void loop() {
@@ -72,17 +75,25 @@ void loop() {
 
   analogWrite(PWM_SAIDA, SinalDeControle); // 0-255 PWM proporcional
 
-  // Plotar valores filtrados no Serial Plotter
+  // Plotar valores no Serial Plotter com nomes no formato "nome:valor"
+  Serial.print("setPoint_filtrado:");
   Serial.print(setPoint_filtrado);
   Serial.print(",");
+
+  Serial.print("RPM_filtrado:");
   Serial.print(RPM_filtrado);
   Serial.print(",");
+
+  Serial.print("SinalDeControle:");
   Serial.print(SinalDeControle);
   Serial.print(",");
 
-  //valores para manter a escala fixa entre 0 e 250 rpm
+  // Valores para manter a escala fixa entre 0 e 250 rpm
+  Serial.print("MinScale:");
   Serial.print(0);
   Serial.print(",");
+
+  Serial.print("MaxScale:");
   Serial.println(250); // Valor fixo para forçar escala
 
   delay(100);
